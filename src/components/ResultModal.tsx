@@ -29,7 +29,7 @@ const ResultModal: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000
+        zIndex: 3000
       }}
     >
       <div 
@@ -77,7 +77,7 @@ const ResultModal: React.FC = () => {
           onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
           onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          確認
+          確定
         </button>
       </div>
     </div>

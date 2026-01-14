@@ -1,10 +1,19 @@
 import React from 'react';
 import { useWheelStore } from '../store/wheelStore';
 
-const PrizeEditor: React.FC = () => {
+interface PrizeEditorProps {
+  onSuccess?: () => void;
+}
+
+const PrizeEditor: React.FC<PrizeEditorProps> = ({ onSuccess }) => {
   const { draftPrizes, addDraftPrize, updateDraftPrize, removeDraftPrize, confirmPrizes, status } = useWheelStore();
   
   const isSpinning = status === 'spinning';
+
+  const handleConfirm = () => {
+    confirmPrizes();
+    if (onSuccess) onSuccess();
+  };
 
   return (
     <div className="prize-editor" style={{ pointerEvents: isSpinning ? 'none' : 'auto', opacity: isSpinning ? 0.6 : 1 }}>
@@ -41,10 +50,10 @@ const PrizeEditor: React.FC = () => {
         <button
           className="btn btn-success"
           style={{ fontSize: '1rem', padding: '0.6rem 1.2rem' }}
-          onClick={confirmPrizes}
+          onClick={handleConfirm}
           disabled={isSpinning || draftPrizes.length === 0}
         >
-          儲存並更新轉盤
+          確定並更新轉盤
         </button>
       </div>
     </div>

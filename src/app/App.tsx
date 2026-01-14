@@ -62,7 +62,7 @@ const App: React.FC = () => {
             <button className="btn-text" onClick={() => setIsDrawerOpen(false)}>✕ 關閉</button>
           </div>
           <ConfigPanel />
-          <PrizeEditor />
+          <PrizeEditor onSuccess={() => setIsDrawerOpen(false)} />
         </section>
 
         {/* 中央面板：優先顯示 */}
