@@ -7,10 +7,11 @@ const ResultModal: React.FC = () => {
 
   // 當狀態切換到 result 時，開啟 Modal
   useEffect(() => {
-    if (status === 'result') {
+    if (status === 'result' && !isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsOpen(true);
     }
-  }, [status]);
+  }, [status, isOpen]);
 
   if (status !== 'result' || !isOpen || !resultPrizeId) return null;
 
