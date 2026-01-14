@@ -72,6 +72,7 @@ const App: React.FC = () => {
             prizes={prizes}
             autoRemove={config.autoRemove}
             wheelRotation={wheelRotation}
+            durationMs={config.durationMs}
             radius={200}
             center={{ x: 250, y: 250 }}
           />

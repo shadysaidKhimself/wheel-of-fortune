@@ -5,6 +5,7 @@ interface WheelCanvasProps {
   prizes: Prize[];
   autoRemove: boolean;
   wheelRotation: number;
+  durationMs: number;
   radius: number;
   center: { x: number; y: number };
 }
@@ -13,6 +14,7 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
   prizes,
   autoRemove,
   wheelRotation,
+  durationMs,
   radius,
   center,
 }) => {
@@ -85,8 +87,11 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
         <circle cx={center.x} cy={center.y} r={radius + 5} fill="#333" />
 
         <g
-          transform={`rotate(${wheelRotation}, ${center.x}, ${center.y})`}
-          style={{ transition: 'transform 3s cubic-bezier(0.15, 0, 0.15, 1)' }}
+          style={{ 
+            transform: `rotate(${wheelRotation}deg)`,
+            transformOrigin: `${center.x}px ${center.y}px`,
+            transition: `transform ${durationMs}ms cubic-bezier(0.15, 0, 0.15, 1)` 
+          }}
         >
           {visiblePrizes.map((prize, i) => {
             const fillColor = getStableColor(prize.id);

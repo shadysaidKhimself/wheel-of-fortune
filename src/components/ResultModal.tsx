@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useWheelStore } from '../store/wheelStore';
 
 const ResultModal: React.FC = () => {
-  const { status, resultPrizeId, prizes } = useWheelStore();
+  const { status, resultPrizeId, prizes, resetStatus } = useWheelStore();
   const [isOpen, setIsOpen] = useState(false);
 
   // 當狀態切換到 result 時，開啟 Modal
@@ -58,7 +58,10 @@ const ResultModal: React.FC = () => {
         </div>
 
         <button
-          onClick={() => setIsOpen(false)}
+          onClick={() => {
+            setIsOpen(false);
+            resetStatus();
+          }}
           style={{
             marginTop: '1rem',
             padding: '0.8rem 2rem',
