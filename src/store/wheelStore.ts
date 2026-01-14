@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Prize, WheelState, SpinConfig } from './types'
+import type { WheelState, SpinConfig } from './types'
 
 interface WheelActions {
   addDraftPrize: (label: string) => void
