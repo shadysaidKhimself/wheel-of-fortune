@@ -58,7 +58,7 @@ const App: React.FC = () => {
       <main className="main-content">
         {/* 左側面板：Mobile 下為 Drawer */}
         <section className={`left-panel ${isDrawerOpen ? 'open' : ''}`}>
-          <div className="mobile-only" style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+          <div className="mobile-only mobile-close-header">
             <button className="btn-text" onClick={() => setIsDrawerOpen(false)}>✕ 關閉</button>
           </div>
           <ConfigPanel />

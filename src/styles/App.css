@@ -236,10 +236,15 @@ input:checked + .slider-round:before {
     flex: 1;
     max-width: 160px;
   }
+  .mobile-close-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (min-width: 769px) {
   .mobile-only {
-    display: none;
+    display: none !important;
   }
 }
