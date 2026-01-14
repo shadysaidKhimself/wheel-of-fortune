@@ -29,6 +29,7 @@
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  color: #333;
 }
 
 .center-panel {
@@ -168,6 +169,7 @@ input:checked + .slider-round:before {
     overflow: hidden;
     transition: max-height 0.3s ease-out, padding 0.3s ease;
     padding: 0;
+    color: #333;
   }
 
   .right-panel.expanded {
@@ -247,4 +249,11 @@ input:checked + .slider-round:before {
   .mobile-only {
     display: none !important;
   }
+}
+
+/* 確保面板內文字在深色模式下不會失效 */
+.left-panel h3, .left-panel span,
+.right-panel h3, .right-panel span,
+.config-panel h3, .config-panel span {
+  color: #333 !important;
 }
