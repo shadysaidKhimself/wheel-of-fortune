@@ -29,8 +29,9 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
       <div
         className="wheel-empty-state"
         style={{
-          width: radius * 2,
-          height: radius * 2,
+          width: '100%',
+          maxWidth: radius * 2,
+          aspectRatio: '1/1',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -38,7 +39,8 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
           border: '2px dashed #ddd',
           color: '#888',
           fontSize: '1.2rem',
-          backgroundColor: '#f9f9f9'
+          backgroundColor: '#f9f9f9',
+          margin: '0 auto'
         }}
       >
         已無可抽獎項
@@ -59,44 +61,41 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
     return `hsl(${h}, 70%, 60%)`;
   };
 
-  return (
-    <div className="wheel-ui-root" style={{ position: 'relative', width: center.x * 2, height: center.y * 2 }}>
-      {/* 指針 */}
-      <div
-        className="wheel-pointer-icon"
-        style={{
-          position: 'absolute',
-          top: center.y - radius - 20,
-          left: center.x,
-          transform: 'translateX(-50%)',
-          width: 0,
-          height: 0,
-          borderLeft: '15px solid transparent',
-          borderRight: '15px solid transparent',
-          borderTop: '30px solid #333',
-          zIndex: 10
-        }}
-      />
+  const viewBoxSize = center.x * 2;
 
+  return (
+    <div 
+      className="wheel-ui-root" 
+      style={{ 
+        position: 'relative', 
+        width: '100%', 
+        maxWidth: viewBoxSize,
+        margin: '0 auto',
+        aspectRatio: '1/1'
+      }}
+    >
+      {/* 指針：現在使用 SVG 坐標系以確保縮放時位置不偏移 */}
       <svg
-        width={center.x * 2}
-        height={center.y * 2}
-        viewBox={`0 0 ${center.x * 2} ${center.y * 2}`}
+        viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
+        style={{ width: '100%', height: '100%', display: 'block' }}
       >
-        {/* 底盤 */}
+        {/* 背景底盤 */}
         <circle cx={center.x} cy={center.y} r={radius + 5} fill="#333" />
 
+        {/* 轉盤主體 */}
         <g
           style={{ 
             transform: `rotate(${wheelRotation}deg)`,
+            WebkitTransform: `rotate(${wheelRotation}deg)`,
             transformOrigin: `${center.x}px ${center.y}px`,
-            transition: `transform ${durationMs}ms cubic-bezier(0.15, 0, 0.15, 1)` 
+            transition: `transform ${durationMs}ms cubic-bezier(0.15, 0, 0.15, 1)`,
+            WebkitTransition: `-webkit-transform ${durationMs}ms cubic-bezier(0.15, 0, 0.15, 1)`,
+            willChange: 'transform'
           }}
         >
           {visiblePrizes.map((prize, i) => {
             const fillColor = getStableColor(prize.id);
 
-            // 處理單一獎項：直接繪製圓形以避免 SVG Arc 路徑重合問題
             if (sliceCount === 1) {
               return (
                 <g key={prize.id}>
@@ -115,7 +114,6 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
               );
             }
 
-            // 處理多個獎項
             const canvasOffset = -Math.PI / 2 - sliceAngle / 2;
             const startAngle = i * sliceAngle + canvasOffset;
             const endAngle = (i + 1) * sliceAngle + canvasOffset;
@@ -151,9 +149,17 @@ const WheelCanvas: React.FC<WheelCanvasProps> = ({
             );
           })}
           
-          {/* 中心圓點 */}
           <circle cx={center.x} cy={center.y} r="12" fill="#333" stroke="#FFF" strokeWidth="3" />
         </g>
+
+        {/* 頂部指針 (不隨旋轉移動) */}
+        <path 
+          d={`M ${center.x - 15} ${center.y - radius - 20} L ${center.x + 15} ${center.y - radius - 20} L ${center.x} ${center.y - radius + 10} Z`}
+          fill="#333"
+          stroke="#FFF"
+          strokeWidth="1"
+          style={{ filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))' }}
+        />
       </svg>
     </div>
   );
