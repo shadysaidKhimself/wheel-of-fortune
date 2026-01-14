@@ -1,0 +1,245 @@
+.app-container {
+  width: 100%;
+  max-width: 1400px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: 320px 1fr 300px;
+  gap: 2rem;
+  width: 100%;
+  flex: 1;
+  align-items: start;
+  margin-top: 1rem;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* iOS Style Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider-round:before {
+  position: absolute;
+  content: "";
+  height: 24px;
+  width: 24px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider-round {
+  background-color: #34c759;
+}
+
+input:checked + .slider-round:before {
+  transform: translateX(22px);
+}
+
+/* Component Styles */
+.prize-item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prize-item input {
+  flex: 1;
+  padding: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #007aff;
+  color: white;
+}
+
+.btn-danger {
+  background: #ff3b30;
+  color: white;
+}
+
+.btn-success {
+  background: #34c759;
+  color: white;
+  font-size: 1.2rem;
+  padding: 1rem 3rem;
+}
+
+.config-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* --- Mobile Responsive (<= 768px) --- */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+    justify-content: flex-start;
+    overflow-x: hidden;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr; /* Reset grid */
+    gap: 1.5rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .center-panel {
+    order: 1;
+    width: 100%;
+  }
+
+  .right-panel {
+    order: 2;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease;
+    padding: 0;
+  }
+
+  .right-panel.expanded {
+    max-height: 500px;
+    padding: 1rem 0;
+    overflow-y: auto;
+  }
+
+  /* Drawer (Settings) */
+  .left-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    z-index: 2000;
+    background: #ffffff;
+    border-radius: 0 16px 16px 0;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+    transform: translateX(-105%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0;
+    padding: 2rem 1.5rem;
+    align-self: flex-start;
+  }
+
+  .left-panel.open {
+    transform: translateX(0);
+  }
+
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 1999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-controls {
+    display: flex;
+    gap: 1rem;
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+
+  .btn-mobile-secondary {
+    background: white;
+    color: #007aff;
+    border: 1px solid #007aff;
+    padding: 0.8rem 1.5rem;
+    flex: 1;
+    max-width: 160px;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none;
+  }
+}
